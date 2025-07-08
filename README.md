@@ -1,6 +1,9 @@
 # Content Delivery Server
 
-Nginx-based content delivery server, designed for static file hosting with modern best practices for security and compression.
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/2370abf3-4fa7-4436-b38c-c1a9937cf88f" width="250" alt="Content Delivery Server Logo" />
+</p>
+<p align="center">Nginx-based content delivery server, designed for static file hosting with modern best practices for security and compression.</p>
 
 ## Features
 
