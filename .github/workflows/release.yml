@@ -19,16 +19,16 @@ jobs:
           shell: bash
         - name: Clone pipelines
           run: | 
-            cd /
+            cd ~
             git clone https://github.com/CharlyGin/pipelines.git
           shell: bash
         - name: Install dependencies
           run: | 
-            cd /pipelines
+            cd ~/pipelines
             uv sync
           shell: bash
         - name: Run Tag & Release
           run: | 
             VERSION=$(cat $GITHUB_WORKSPACE/.versionrc)
-            uv run /pipelines/scripts/tag_and_release.py --tag $VERSION --app $GITHUB_WORKSPACE
+            uv run ~/pipelines/scripts/tag_and_release.py --tag $VERSION --app $GITHUB_WORKSPACE
           shell: bash

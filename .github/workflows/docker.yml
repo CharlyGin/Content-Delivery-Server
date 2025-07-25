@@ -35,17 +35,17 @@ jobs:
           shell: bash
         - name: Clone pipelines
           run: | 
-            cd /
+            cd ~
             git clone git@github.com:CharlyGin/pipelines.git
           shell: bash
         - name: Install dependencies
           run: | 
-            cd /pipelines
+            cd ~/pipelines
             uv sync
           shell: bash
         - name: Run Tag & Release
           run: | 
-            uv run /pipelines/scripts/build_and_push_docker.py \
+            uv run ~/pipelines/scripts/build_and_push_docker.py \
                 --tags ${{ secrets.DOCKERHUB_USERNAME }}/wake-up:latest,${{ secrets.DOCKERHUB_USERNAME }}/wake-up:${{ github.event.release.tag_name }} \
                 --platforms "linux/amd64,linux/arm64" \
                 --file $GITHUB_WORKSPACE/dockerfile \
