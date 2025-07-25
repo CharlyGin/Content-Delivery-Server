@@ -1,0 +1,38 @@
+name: Release
+
+on:
+  push: 
+    branches: 
+      - main
+
+jobs:
+  tag_and_release:
+    runs-on: ubuntu-latest
+    permissions: 
+        contents: write
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+        - name: Install uv
+          run: |
+            sudo apt update
+            sudo apt install -y curl
+            sudo curl -LsSf https://astral.sh/uv/install.sh | sh
+          shell: bash
+        - name: Clone pipelines
+          run: | 
+            cd ~
+            git clone https://github.com/CharlyGin/pipelines.git
+          shell: bash
+        - name: Install dependencies
+          run: | 
+            cd ~/pipelines
+            uv sync
+          shell: bash
+        - name: Run Tag & Release
+          run: | 
+            VERSION=$(cat $GITHUB_WORKSPACE/.versionrc)
+            uv run ~/pipelines/scripts/tag_and_release.py --tag $VERSION --app $GITHUB_WORKSPACE
+          env:
+            GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          shell: bash
