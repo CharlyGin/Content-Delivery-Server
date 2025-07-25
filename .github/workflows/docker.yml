@@ -3,10 +3,6 @@ name: Docker
 on:
   release:
     types: [released]
-  workflow_run:
-    workflows: ["Release"]
-    types:
-      - completed
 
 jobs:
   build_and_deploy_docker:
