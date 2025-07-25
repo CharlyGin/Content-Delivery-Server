@@ -1,0 +1,55 @@
+name: Docker
+
+on:
+  release:
+    types: [released]
+
+jobs:
+  build_and_deploy_docker:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+        - name: Install docker
+          run: |
+            export DEBIAN_FRONTEND="noninteractive"
+            sudo apt-get update
+            sudo apt-get install -y ca-certificates curl
+            sudo install -m 0755 -d /etc/apt/keyrings
+            sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+            sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+            echo \
+            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+            $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+            sudo apt-get update
+
+            sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+          shell: bash
+        - name: Install uv
+          run: |
+            sudo apt update
+            sudo apt install -y curl
+            sudo curl -LsSf https://astral.sh/uv/install.sh | sh
+          shell: bash
+        - name: Clone pipelines
+          run: | 
+            cd /
+            git clone git@github.com:CharlyGin/pipelines.git
+          shell: bash
+        - name: Install dependencies
+          run: | 
+            cd /pipelines
+            uv sync
+          shell: bash
+        - name: Run Tag & Release
+          run: | 
+            uv run /pipelines/scripts/build_and_push_docker.py \
+                --tags ${{ secrets.DOCKERHUB_USERNAME }}/wake-up:latest,${{ secrets.DOCKERHUB_USERNAME }}/wake-up:${{ github.event.release.tag_name }} \
+                --platforms "linux/amd64,linux/arm64" \
+                --file $GITHUB_WORKSPACE/dockerfile \
+                --path $GITHUB_WORKSPACE
+                --skip-scout
+
+          shell: bash
