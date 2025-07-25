@@ -52,10 +52,10 @@ jobs:
             uv run ~/pipelines/scripts/build_and_push_docker.py \
                 --username ${{ secrets.DOCKERHUB_USERNAME }} \
                 --token ${{ secrets.DOCKERHUB_TOKEN }} \
-                --tags ${{ secrets.DOCKERHUB_USERNAME }}/content-delivery-server:latest,${{ secrets.DOCKERHUB_TOKEN }}/content-delivery-server:${{ github.event.release.tag_name }} \
+                --tags ${{ secrets.DOCKERHUB_USERNAME }}/content-delivery-server:latest,${{ secrets.DOCKERHUB_USERNAME }}/content-delivery-server:${{ github.event.release.tag_name }} \
                 --platforms "linux/amd64,linux/arm64" \
                 --file $GITHUB_WORKSPACE/dockerfile \
-                --path $GITHUB_WORKSPACE
+                --path $GITHUB_WORKSPACE \
                 --skip-scout
 
           shell: bash
