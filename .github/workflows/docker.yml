@@ -47,10 +47,10 @@ jobs:
             cd ~/pipelines
             uv sync
           shell: bash
-        - name: Run Tag & Release
+        - name: Run Build & Push
           run: | 
             uv run ~/pipelines/scripts/build_and_push_docker.py \
-                --tags ${{ secrets.DOCKERHUB_USERNAME }}/content-delivery-server:latest,${{ secrets.DOCKERHUB_USERNAME }}/content-delivery-server:${{ github.event.release.tag_name }} \
+                --tags ${{ secrets.DOCKERHUB_USERNAME }}/content-delivery-server:latest,${{ secrets.DOCKERHUB_TOKEN }}/content-delivery-server:${{ github.event.release.tag_name }} \
                 --platforms "linux/amd64,linux/arm64" \
                 --file $GITHUB_WORKSPACE/dockerfile \
                 --path $GITHUB_WORKSPACE
