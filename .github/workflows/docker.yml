@@ -40,7 +40,7 @@ jobs:
         - name: Clone pipelines
           run: | 
             cd ~
-            git clone git@github.com:CharlyGin/pipelines.git
+            git clone https://github.com/CharlyGin/pipelines.git
           shell: bash
         - name: Install dependencies
           run: | 
