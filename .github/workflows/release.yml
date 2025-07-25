@@ -31,4 +31,6 @@ jobs:
           run: | 
             VERSION=$(cat $GITHUB_WORKSPACE/.versionrc)
             uv run ~/pipelines/scripts/tag_and_release.py --tag $VERSION --app $GITHUB_WORKSPACE
+          env:
+            GH_TOKEN: ${{ github.token }}
           shell: bash
