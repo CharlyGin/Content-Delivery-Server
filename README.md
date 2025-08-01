@@ -16,10 +16,12 @@
 
 ## Usage 
 
+You can find the app on [Docker Hub](https://hub.docker.com/r/carlitog/content-delivery-server).
+
 For HTTPS only:
 
 ```sh
-$ docker run -it -e HTTPS_ON=true -e HTTP_ON=false -e SERVER_NAME=my.domain.tld -p 443:443 -p 80:80  -v ./certs:/etc/ssl/cdn -v ./media:/var/www/media content-devlivery-server:1.0.0
+$ docker run -it -e HTTPS_ON=true -e HTTP_ON=false -e SERVER_NAME=my.domain.tld -p 443:443 -p 80:80  -v ./certs:/etc/ssl/cdn -v ./media:/var/www/media carlitog/content-delivery-server:1.0.0
 ```
 
 OR
@@ -43,7 +45,7 @@ services:
 For HTTP only:
 
 ```sh
-$ docker run -it -e HTTPS_ON=false -e HTTP_ON=true -e SERVER_NAME=my.domain.tld -p 80:80  -v ./media:/var/www/media content-devlivery-server:1.0.0
+$ docker run -it -e HTTPS_ON=false -e HTTP_ON=true -e SERVER_NAME=my.domain.tld -p 80:80  -v ./media:/var/www/media carlitog/content-delivery-server:1.0.0
 ```
 
 OR 
@@ -64,10 +66,10 @@ services:
 
 ## Useful links
 
-+ (NGINXConfig - Digital Ocean)[https://www.digitalocean.com/community/tools/nginx]
-+ (Nginx Cookbook - F5)[https://www.f5.com/content/dam/f5/corp/global/pdf/ebooks/NGINX_Cookbook-final.pdf]
-+ (ngx_brotli - Github)[https://github.com/google/ngx_brotli]
-+ (GreenIT)[https://www.greenit.fr/]
++ [NGINXConfig - Digital Ocean](https://www.digitalocean.com/community/tools/nginx)
++ [Nginx Cookbook - F5](https://www.f5.com/content/dam/f5/corp/global/pdf/ebooks/NGINX_Cookbook-final.pdf)
++ [ngx_brotli - Github](https://github.com/google/ngx_brotli)
++ [GreenIT](https://www.greenit.fr/)
 
 ## License
 
